@@ -1,4 +1,4 @@
-# TODO: [Project name](project GitHub HTTP URL)
+# [async-loops](https://github.com/h2oboi89/async-loops)
 
 ## Setup
 - Run `npm install` to install all dependencies
