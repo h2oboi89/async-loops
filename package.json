@@ -1,0 +1,33 @@
+{
+  "name": "async-loop",
+  "version": "0.0.0",
+  "description": "for, while, do-while, and for-each loops for promises",
+  "main": "index.js",
+  "scripts": {
+    "gulp": "gulp",
+    "lint": "gulp lint",
+    "test": "gulp test",
+    "coverage": "gulp coverage",
+    "watch": "gulp watch",
+    "docClone": "jsdocgen clone",
+    "docGenerate": "jsdocgen generate",
+    "docPublish": "jsdocgen publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "TODO"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-istanbul": "^0.10.2",
+    "gulp-jasmine": "^2.2.0",
+    "gulp-jshint": "^1.12.0",
+    "gulp-tap": "^0.1.3",
+    "jsdocgen": "^0.2.3",
+    "mach.js": "^0.2.0",
+    "proxyquire": "^1.7.9"
+  },
+  "dependencies": {}
+}
