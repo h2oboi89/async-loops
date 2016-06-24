@@ -17,7 +17,7 @@
     "type": "git",
     "url": "git@github.com:h2oboi89/async-loops.git"
   },
-  "author": "",
+  "author": "h2oboi89@gmail.com",
   "license": "ISC",
   "devDependencies": {
     "gulp": "^3.9.0",
