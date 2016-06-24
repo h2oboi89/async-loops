@@ -13,3 +13,16 @@
 - Run `npm run docClone` to clone your documentation repository
 - Run `npm run docGenerate` to generate documentation locally
 - Run `npm run docPublish` to generate and publish documentation on GitHub Pages
+
+```js
+let loops = require('async-loops');
+
+console.log(loops);
+
+/**
+{ for: [Function],
+  while: [Function],
+  doWhile: [Function],
+  forEach: [Function] }
+**/
+```
