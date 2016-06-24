@@ -52,15 +52,15 @@ let forEachLoop = (items, thunk) => {
   return _forEachLoop(items.slice(), thunk);
 };
 
-let _forEachLoop = (items, thunk) => {
+let _forEachLoop = (items, thunk, value) => {
   return new Promise((resolve, reject) => {
     if(items.length === 0) {
-      resolve();
+      resolve(value);
     }
     else {
       return thunk(items.shift())
-        .then(() => {
-          resolve(_forEachLoop(items, thunk));
+        .then((v) => {
+          resolve(_forEachLoop(items, thunk, v));
         })
         .catch((error) => {
           reject(error);
