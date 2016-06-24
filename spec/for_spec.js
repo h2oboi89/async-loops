@@ -26,7 +26,7 @@ describe('for', () => {
   it('should reject if thunk rejects', asyncTest(() => {
     return initial.shouldBeCalled()
       .then(condition.shouldBeCalled().andWillReturn(true))
-      .then(thunk.shouldBeCalled().andWillReturn(Promise.reject('oh noes!')))
+      .then(thunk.shouldBeCalledWith(undefined).andWillReturn(Promise.reject('oh noes!')))
       .when(() => {
         return shouldReject(forLoop(initial, condition, update, thunk), 'oh noes!');
       });
@@ -35,7 +35,7 @@ describe('for', () => {
   it('should resolve with the value thunk resolves with', asyncTest(() => {
     return initial.shouldBeCalled()
       .then(condition.shouldBeCalled().andWillReturn(true))
-      .then(thunk.shouldBeCalled().andWillReturn(Promise.resolve('oh hai der!')))
+      .then(thunk.shouldBeCalledWith(undefined).andWillReturn(Promise.resolve('oh hai der!')))
       .then(update.shouldBeCalled())
       .then(condition.shouldBeCalled().andWillReturn(false))
       .when(() => {
@@ -46,7 +46,7 @@ describe('for', () => {
   it('should execute the loop until the condition is false', asyncTest(() => {
     let iteration = () => {
       return condition.shouldBeCalled().andWillReturn(true)
-        .then(thunk.shouldBeCalled().andWillReturn(Promise.resolve()))
+        .then(thunk.shouldBeCalledWith(undefined).andWillReturn(Promise.resolve()))
         .then(update.shouldBeCalled());
     };
 

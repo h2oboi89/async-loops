@@ -22,7 +22,7 @@ describe('while', () => {
 
   it('should reject if thunk rejects', asyncTest(() => {
     return condition.shouldBeCalled().andWillReturn(true)
-      .then(thunk.shouldBeCalled().andWillReturn(Promise.reject('oh noes!')))
+      .then(thunk.shouldBeCalledWith(undefined).andWillReturn(Promise.reject('oh noes!')))
       .when(() => {
         return shouldReject(whileLoop(condition, thunk), 'oh noes!');
       });
@@ -30,7 +30,7 @@ describe('while', () => {
 
   it('should resolve with the value thunk resolves with', asyncTest(() => {
     return condition.shouldBeCalled().andWillReturn(true)
-      .then(thunk.shouldBeCalled().andWillReturn(Promise.resolve('oh hai der!')))
+      .then(thunk.shouldBeCalledWith(undefined).andWillReturn(Promise.resolve('oh hai der!')))
       .then(condition.shouldBeCalled().andWillReturn(false))
       .when(() => {
         return shouldResolve(whileLoop(condition, thunk), 'oh hai der!');
@@ -40,7 +40,7 @@ describe('while', () => {
   it('should execute the loop until the condition is false', asyncTest(() => {
     let iteration = () => {
       return condition.shouldBeCalled().andWillReturn(true)
-        .then(thunk.shouldBeCalled().andWillReturn(Promise.resolve()));
+        .then(thunk.shouldBeCalledWith(undefined).andWillReturn(Promise.resolve()));
     };
 
     return iteration()

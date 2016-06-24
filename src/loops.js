@@ -1,12 +1,12 @@
 'use strict';
 
-let forLoop = (initial, condition, update, thunk) => {
+let forLoop = (initial, condition, update, thunk, seed) => {
   initial();
-  return _loop(condition, update, thunk);
+  return _loop(condition, update, thunk, seed);
 };
 
-let whileLoop = (condition, thunk) => {
-  return _loop(condition, () => {}, thunk);
+let whileLoop = (condition, thunk, seed) => {
+  return _loop(condition, () => {}, thunk, seed);
 };
 
 let _loop = (condition, update, thunk, value) => {
@@ -15,7 +15,7 @@ let _loop = (condition, update, thunk, value) => {
       resolve(value);
     }
     else {
-      return thunk()
+      return thunk(value)
         .then((v) => {
           update();
           resolve(_loop(condition, update, thunk, v));
@@ -27,19 +27,19 @@ let _loop = (condition, update, thunk, value) => {
   });
 };
 
-let doWhileLoop = (condition, thunk) => {
-  return _doLoop(condition, thunk);
+let doWhileLoop = (condition, thunk, seed) => {
+  return _doLoop(condition, thunk, seed);
 };
 
-let _doLoop = (condition, thunk) => {
+let _doLoop = (condition, thunk, value) => {
   return new Promise((resolve, reject) => {
-    return thunk()
-      .then((value) => {
+    return thunk(value)
+      .then((v) => {
         if(!condition()) {
-          resolve(value);
+          resolve(v);
         }
         else {
-          resolve(_doLoop(condition, thunk));
+          resolve(_doLoop(condition, thunk, v));
         }
       })
       .catch((error) => {
@@ -48,8 +48,8 @@ let _doLoop = (condition, thunk) => {
   });
 };
 
-let forEachLoop = (items, thunk) => {
-  return _forEachLoop(items.slice(), thunk);
+let forEachLoop = (items, thunk, seed) => {
+  return _forEachLoop(items.slice(), thunk, seed);
 };
 
 let _forEachLoop = (items, thunk, value) => {
@@ -58,7 +58,7 @@ let _forEachLoop = (items, thunk, value) => {
       resolve(value);
     }
     else {
-      return thunk(items.shift())
+      return thunk(value, items.shift())
         .then((v) => {
           resolve(_forEachLoop(items, thunk, v));
         })

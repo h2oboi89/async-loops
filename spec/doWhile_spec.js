@@ -14,7 +14,7 @@ describe('doWhile', () => {
   let thunk = mach.mockFunction('thunk');
 
   it('should call the loop body once if the condition is false', asyncTest(() => {
-    return thunk.shouldBeCalled().andWillReturn(Promise.resolve())
+    return thunk.shouldBeCalledWith(undefined).andWillReturn(Promise.resolve())
       .then(condition.shouldBeCalled().andWillReturn(false))
       .when(() => {
         return shouldResolve(doWhileLoop(condition, thunk));
@@ -22,14 +22,14 @@ describe('doWhile', () => {
   }));
 
   it('should reject if thunk rejects', asyncTest(() => {
-    return thunk.shouldBeCalled().andWillReturn(Promise.reject('oh noes!'))
+    return thunk.shouldBeCalledWith(undefined).andWillReturn(Promise.reject('oh noes!'))
       .when(() => {
         return shouldReject(doWhileLoop(condition, thunk), 'oh noes!');
       });
   }));
 
   it('should resolve with the value thunk resolves with', asyncTest(() => {
-    return thunk.shouldBeCalled().andWillReturn(Promise.resolve('oh hai der!'))
+    return thunk.shouldBeCalledWith(undefined).andWillReturn(Promise.resolve('oh hai der!'))
       .then(condition.shouldBeCalled().andWillReturn(false))
       .when(() => {
         return shouldResolve(doWhileLoop(condition, thunk), 'oh hai der!');
@@ -38,7 +38,7 @@ describe('doWhile', () => {
 
   it('should execute the loop until the condition is false', asyncTest(() => {
     let iteration = () => {
-      return thunk.shouldBeCalled().andWillReturn(Promise.resolve())
+      return thunk.shouldBeCalledWith(undefined).andWillReturn(Promise.resolve())
         .then(condition.shouldBeCalled().andWillReturn(true));
     };
 
@@ -46,7 +46,7 @@ describe('doWhile', () => {
       .then(iteration())
       .then(iteration())
       .then(iteration())
-      .then(thunk.shouldBeCalled().andWillReturn(Promise.resolve()))
+      .then(thunk.shouldBeCalledWith(undefined).andWillReturn(Promise.resolve()))
       .then(condition.shouldBeCalled().andWillReturn(false))
       .when(() => {
         return shouldResolve(doWhileLoop(condition, thunk));
