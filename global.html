@@ -23,50 +23,232 @@
 <dl class="details">
 </dl>
     </div>
-        <h3 class="subsection-title">Members</h3>
-<h4 class="name" id="doWhile"><span class="type-signature"></span>doWhile<span class="type-signature"></span></h4>
+        <h3 class="subsection-title">Methods</h3>
+    <h4 class="name" id="doWhile"><span class="type-signature"></span>doWhile<span class="signature">(condition, thunk, seed<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 <div class="description">
     <p>Asynchronous <code>doWhile</code> loop.
 The initial iteration is passed the <code>seed</code> value.
 Subsequent iterations get passed the resolved value from the last iteration.</p>
 </div>
+    <h5>Parameters:</h5>
+<table class="params">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Attributes</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+                <td class="name"><code>condition</code></td>
+            <td class="type">
+<span class="param-type">function</span>
+            </td>
+                <td class="attributes">
+                </td>
+            <td class="description last"><p>Checks whether loop should continue or quit. ie: <code>() =&gt; i &lt; 10</code></p></td>
+        </tr>
+        <tr>
+                <td class="name"><code>thunk</code></td>
+            <td class="type">
+<span class="param-type">function</span>
+            </td>
+                <td class="attributes">
+                </td>
+            <td class="description last"><p>Loop body. Returns a Promise and accepts a value.</p></td>
+        </tr>
+        <tr>
+                <td class="name"><code>seed</code></td>
+            <td class="type">
+<span class="param-type">object</span>
+            </td>
+                <td class="attributes">
+                    &lt;optional><br>
+                </td>
+            <td class="description last"><p>Initial value to be passed to first loop iteration.</p></td>
+        </tr>
+    </tbody>
+</table>
 <dl class="details">
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="loops.js.html">loops.js</a>, <a href="loops.js.html#line50">line 50</a>
     </li></ul></dd>
 </dl>
-<h4 class="name" id="for"><span class="type-signature"></span>for<span class="type-signature"></span></h4>
+    <h4 class="name" id="for"><span class="type-signature"></span>for<span class="signature">(initial, condition, update, thunk, seed<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 <div class="description">
     <p>Asynchronous <code>for</code> loop.
 The initial iteration is passed the <code>seed</code> value.
 Subsequent iterations get passed the resolved value from the last iteration.</p>
 </div>
+    <h5>Parameters:</h5>
+<table class="params">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Attributes</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+                <td class="name"><code>initial</code></td>
+            <td class="type">
+<span class="param-type">function</span>
+            </td>
+                <td class="attributes">
+                </td>
+            <td class="description last"><p>Sets up initial condition for loop. ie: <code>() =&gt; i = 0</code></p></td>
+        </tr>
+        <tr>
+                <td class="name"><code>condition</code></td>
+            <td class="type">
+<span class="param-type">function</span>
+            </td>
+                <td class="attributes">
+                </td>
+            <td class="description last"><p>Checks whether loop body should be executed. ie: <code>() =&gt; i &lt; 10</code></p></td>
+        </tr>
+        <tr>
+                <td class="name"><code>update</code></td>
+            <td class="type">
+<span class="param-type">function</span>
+            </td>
+                <td class="attributes">
+                </td>
+            <td class="description last"><p>Executes after the loop body. ie: <code>() =&gt; i++</code></p></td>
+        </tr>
+        <tr>
+                <td class="name"><code>thunk</code></td>
+            <td class="type">
+<span class="param-type">function</span>
+            </td>
+                <td class="attributes">
+                </td>
+            <td class="description last"><p>Loop body. Returns a Promise and accepts a value.</p></td>
+        </tr>
+        <tr>
+                <td class="name"><code>seed</code></td>
+            <td class="type">
+<span class="param-type">object</span>
+            </td>
+                <td class="attributes">
+                    &lt;optional><br>
+                </td>
+            <td class="description last"><p>Initial value to be passed to first loop iteration.</p></td>
+        </tr>
+    </tbody>
+</table>
 <dl class="details">
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="loops.js.html">loops.js</a>, <a href="loops.js.html#line3">line 3</a>
     </li></ul></dd>
 </dl>
-<h4 class="name" id="forEach"><span class="type-signature"></span>forEach<span class="type-signature"></span></h4>
+    <h4 class="name" id="forEach"><span class="type-signature"></span>forEach<span class="signature">(items, thunk, seed<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 <div class="description">
     <p>Asynchronous <code>forEach</code> loop.
 The initial iteration is passed the <code>seed</code> value and an item from <code>items</code>.
 Subsequent iterations get passed the resolved value from the last iteration
 and the next item from <code>items</code>.</p>
 </div>
+    <h5>Parameters:</h5>
+<table class="params">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Attributes</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+                <td class="name"><code>items</code></td>
+            <td class="type">
+<span class="param-type">Array.&lt;object></span>
+            </td>
+                <td class="attributes">
+                </td>
+            <td class="description last"><p>Collection to iterator over.</p></td>
+        </tr>
+        <tr>
+                <td class="name"><code>thunk</code></td>
+            <td class="type">
+<span class="param-type">function</span>
+            </td>
+                <td class="attributes">
+                </td>
+            <td class="description last"><p>Loop body. Returns a Promise and accepts a value.</p></td>
+        </tr>
+        <tr>
+                <td class="name"><code>seed</code></td>
+            <td class="type">
+<span class="param-type">object</span>
+            </td>
+                <td class="attributes">
+                    &lt;optional><br>
+                </td>
+            <td class="description last"><p>Initial value to be passed to first loop iteration.</p></td>
+        </tr>
+    </tbody>
+</table>
 <dl class="details">
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="loops.js.html">loops.js</a>, <a href="loops.js.html#line80">line 80</a>
     </li></ul></dd>
 </dl>
-<h4 class="name" id="while"><span class="type-signature"></span>while<span class="type-signature"></span></h4>
+    <h4 class="name" id="while"><span class="type-signature"></span>while<span class="signature">(condition, thunk, seed<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 <div class="description">
     <p>Asynchronous <code>while</code> loop.
 The initial iteration is passed the <code>seed</code> value.
 Subsequent iterations get passed the resolved value from the last iteration.</p>
 </div>
+    <h5>Parameters:</h5>
+<table class="params">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Attributes</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+                <td class="name"><code>condition</code></td>
+            <td class="type">
+<span class="param-type">function</span>
+            </td>
+                <td class="attributes">
+                </td>
+            <td class="description last"><p>Checks whether loop body should be executed. ie: <code>() =&gt; i &lt; 10</code></p></td>
+        </tr>
+        <tr>
+                <td class="name"><code>thunk</code></td>
+            <td class="type">
+<span class="param-type">function</span>
+            </td>
+                <td class="attributes">
+                </td>
+            <td class="description last"><p>Loop body. Returns a Promise and accepts a value.</p></td>
+        </tr>
+        <tr>
+                <td class="name"><code>seed</code></td>
+            <td class="type">
+<span class="param-type">object</span>
+            </td>
+                <td class="attributes">
+                    &lt;optional><br>
+                </td>
+            <td class="description last"><p>Initial value to be passed to first loop iteration.</p></td>
+        </tr>
+    </tbody>
+</table>
 <dl class="details">
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
@@ -81,7 +263,7 @@ Subsequent iterations get passed the resolved value from the last iteration.</p>
 </nav>
 <br class="clear">
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jun 24 2016 17:19:53 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Jun 24 2016 22:45:51 GMT-0400 (Eastern Daylight Time)
 </footer>
 <script> prettyPrint(); </script>
 <script src="scripts/linenumber.js"> </script>
