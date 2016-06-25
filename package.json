@@ -1,6 +1,6 @@
 {
   "name": "async-loops",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "for, while, do-while, and for-each loops for promises",
   "main": "index.js",
   "scripts": {
