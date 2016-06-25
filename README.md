@@ -29,4 +29,8 @@ console.log(loops);
 **/
 ```
 
-[Documentation](https://h2oboi89.github.io/async-loops/)
+# Documentation
+[JSDoc documentation](https://h2oboi89.github.io/async-loops/)
+
+# Usage
+[Reduce Example](https://github.com/h2oboi89/async-loops/blob/master/spec/loops_spec.js)
