@@ -1,6 +1,6 @@
 {
   "name": "async-loops",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "for, while, do-while, and for-each loops for promises",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,6 @@
     "docGenerate": "jsdocgen generate",
     "docPublish": "jsdocgen publish"
   },
-  "homepage": "https://h2oboi89.github.io/async-loops/",
   "repository": {
     "type": "git",
     "url": "git@github.com:h2oboi89/async-loops.git"

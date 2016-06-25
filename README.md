@@ -28,3 +28,5 @@ console.log(loops);
   forEach: [Function] }
 **/
 ```
+
+[Documentation](https://h2oboi89.github.io/async-loops/)
