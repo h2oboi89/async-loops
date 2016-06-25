@@ -4,7 +4,7 @@
  * Asynchronous `for` loop.
  * The initial iteration is passed the `seed` value.
  * Subsequent iterations get passed the resolved value from the last iteration.
- * @name for
+ * @function for
  * @param {function} initial Sets up initial condition for loop. ie: `() => i = 0`
  * @param {function} condition Checks whether loop body should be executed. ie: `() => i < 10`
  * @param {function} update Executes after the loop body. ie: `() => i++`
@@ -20,7 +20,7 @@ let forLoop = (initial, condition, update, thunk, seed) => {
  * Asynchronous `while` loop.
  * The initial iteration is passed the `seed` value.
  * Subsequent iterations get passed the resolved value from the last iteration.
- * @name while
+ * @function while
  * @param {function} condition Checks whether loop body should be executed. ie: `() => i < 10`
  * @param {function} thunk Loop body. Returns a Promise and accepts a value.
  * @param {object} [seed] Initial value to be passed to first loop iteration.
@@ -51,7 +51,7 @@ let _loop = (condition, update, thunk, value) => {
  * Asynchronous `doWhile` loop.
  * The initial iteration is passed the `seed` value.
  * Subsequent iterations get passed the resolved value from the last iteration.
- * @name doWhile
+ * @function doWhile
  * @param {function} condition Checks whether loop should continue or quit. ie: `() => i < 10`
  * @param {function} thunk Loop body. Returns a Promise and accepts a value.
  * @param {object} [seed] Initial value to be passed to first loop iteration.
@@ -82,7 +82,7 @@ let _doLoop = (condition, thunk, value) => {
  * The initial iteration is passed the `seed` value and an item from `items`.
  * Subsequent iterations get passed the resolved value from the last iteration
  * and the next item from `items`.
- * @name forEach
+ * @function forEach
  * @param {object[]} items Collection to iterator over.
  * @param {function} thunk Loop body. Returns a Promise and accepts a value.
  * @param {object} [seed] Initial value to be passed to first loop iteration.
