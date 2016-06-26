@@ -8,7 +8,9 @@ let shouldReject = (thunk, reason) => {
 
 let shouldResolve = (thunk, expectedValue) => {
   return thunk
-    .then((value) => expect(value).toEqual(expectedValue));
+    .then((value) => {
+      expect(value).toEqual(expectedValue);
+    });
 };
 
 let asyncTest = (thunk) => (done) => {

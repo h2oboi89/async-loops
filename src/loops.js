@@ -88,18 +88,19 @@ let _doLoop = (condition, thunk, value) => {
  * @param {object} [seed] Initial value to be passed to first loop iteration.
  */
 let forEachLoop = (items, thunk, seed) => {
-  return _forEachLoop(items.slice(), thunk, seed);
+  return _forEachLoop(items.slice(), thunk, 0, seed);
 };
 
-let _forEachLoop = (items, thunk, value) => {
+let _forEachLoop = (items, thunk, index, value) => {
   return new Promise((resolve, reject) => {
-    if(items.length === 0) {
-      resolve(value);
+    if(index === items.length) {
+      resolve(items);
     }
     else {
-      return thunk(value, items.shift())
+      return thunk(value, items[index], index, items)
         .then((v) => {
-          resolve(_forEachLoop(items, thunk, v));
+          items[index] = v;
+          resolve(_forEachLoop(items, thunk, index + 1, v));
         })
         .catch((error) => {
           reject(error);

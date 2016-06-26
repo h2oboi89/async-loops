@@ -53,10 +53,13 @@ describe('loops', () => {
 
   describe('forEach', () => {
     it('should be able to sum up a list of numbers', asyncTest(() => {
-      return shouldResolve(loops.forEach([0, 1, 2, 3, 4, 5], (value, item) => {
-          return Promise.resolve(value + item);
-        },
-        0), 15);
+      let items = [0, 1, 2, 3, 4, 5];
+      return shouldResolve(loops.forEach(items, (value, item, index) => {
+        if(index === 0) {
+          return Promise.resolve(item);
+        }
+        return Promise.resolve(value + item);
+      }), [0, 1, 3, 6, 10, 15]);
     }));
   });
 });
