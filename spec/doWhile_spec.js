@@ -52,4 +52,32 @@ describe('doWhile', () => {
         return shouldResolve(doWhileLoop(condition, thunk));
       });
   }));
+
+  it('should return previous value when break is called', asyncTest(() => {
+    let i = 0;
+    return shouldResolve(doWhileLoop(() => i < 10, () => {
+      i++;
+      if(i === 5) {
+        return Promise.reject(loops.break);
+      }
+      else {
+        return Promise.resolve(i);
+      }
+    }), 4);
+  }));
+
+  it('should terminate thunks early if continue is called', asyncTest(() => {
+    let i = 0;
+    let j = 0;
+    return shouldResolve(doWhileLoop(() => i < 10, () => {
+      i++;
+      if(i % 2 === 0) {
+        return Promise.reject(loops.continue);
+      }
+      else {
+        j++;
+        return Promise.resolve(j);
+      }
+    }), 5);
+  }));
 });

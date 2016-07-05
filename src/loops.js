@@ -43,7 +43,17 @@ let _loop = (condition, update, thunk, value) => {
           resolve(_loop(condition, update, thunk, v));
         })
         .catch((error) => {
-          reject(error);
+          switch(error) {
+            case BREAK_ERROR:
+              resolve(value);
+              break;
+            case CONTINUE_ERROR:
+              update();
+              resolve(_loop(condition, update, thunk, value));
+              break;
+            default:
+              reject(error);
+          }
         });
     }
   });
@@ -75,7 +85,21 @@ let _doLoop = (condition, thunk, value) => {
         }
       })
       .catch((error) => {
-        reject(error);
+        switch(error) {
+          case BREAK_ERROR:
+            resolve(value);
+            break;
+          case CONTINUE_ERROR:
+            if(!condition()) {
+              resolve(value);
+            }
+            else {
+              resolve(_doLoop(condition, thunk, value));
+            }
+            break;
+          default:
+            reject(error);
+        }
       });
   });
 };
@@ -112,15 +136,30 @@ let _forEachLoop = (items, thunk, index, value) => {
           resolve(_forEachLoop(items, thunk, index + 1, v));
         })
         .catch((error) => {
-          reject(error);
+          switch(error) {
+            case BREAK_ERROR:
+              resolve(items);
+              break;
+            case CONTINUE_ERROR:
+              items[index] = value;
+              resolve(_forEachLoop(items, thunk, index + 1, value));
+              break;
+            default:
+              reject(error);
+          }
         });
     }
   });
 };
 
+const BREAK_ERROR = 'ASYNC_LOOPS_BREAK';
+const CONTINUE_ERROR = 'ASYNC_LOOPS_CONTINUE';
+
 module.exports = {
   for: forLoop,
   while: whileLoop,
   doWhile: doWhileLoop,
-  forEach: forEachLoop
+  forEach: forEachLoop,
+  break: BREAK_ERROR,
+  continue: CONTINUE_ERROR
 };

@@ -49,4 +49,30 @@ describe('forEach', () => {
         expect(items).toEqual([0, 1, 2, 3]);
       });
   }));
+
+  it('should return previous value when break is called', asyncTest(() => {
+    let _items = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    return shouldResolve(forEachLoop(_items, (value, item, index, items) => {
+      if(index === 5) {
+        return Promise.reject(loops.break);
+      }
+      else {
+        return Promise.resolve(item + 1);
+      }
+    }), [1, 2, 3, 4, 5, 5, 6, 7, 8, 9]);
+  }));
+
+  it('should terminate thunks early if continue is called', asyncTest(() => {
+    let _items = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let j = 0;
+    return shouldResolve(forEachLoop(_items, (value, item, index, items) => {
+      if(index % 2 === 0) {
+        return Promise.reject(loops.continue);
+      }
+      else {
+        j++;
+        return Promise.resolve(j);
+      }
+    }), [undefined, 1, 1, 2, 2, 3, 3, 4, 4, 5]);
+  }));
 });
