@@ -60,4 +60,30 @@ describe('for', () => {
         return shouldResolve(forLoop(initial, condition, update, thunk));
       });
   }));
+
+  it('should return previous value when break is called', asyncTest(() => {
+    let i;
+    return shouldResolve(forLoop(() => i = 0, () => i < 10, () => i++, () => {
+      if(i === 5) {
+        return Promise.reject(loops.break);
+      }
+      else {
+        return Promise.resolve(i);
+      }
+    }), 4);
+  }));
+
+  it('should terminate thunks early if continue is called', asyncTest(() => {
+    let i;
+    let j = 0;
+    return shouldResolve(forLoop(() => i = 0, () => i < 10, () => i++, () => {
+      if(i % 2 === 0) {
+        return Promise.reject(loops.continue);
+      }
+      else {
+        j++;
+        return Promise.resolve(j);
+      }
+    }), 5);
+  }));
 });

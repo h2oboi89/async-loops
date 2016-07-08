@@ -43,7 +43,17 @@ let _loop = (condition, update, thunk, value) => {
           resolve(_loop(condition, update, thunk, v));
         })
         .catch((error) => {
-          reject(error);
+          switch(error) {
+            case BREAK_ERROR:
+              resolve(value);
+              break;
+            case CONTINUE_ERROR:
+              update();
+              resolve(_loop(condition, update, thunk, value));
+              break;
+            default:
+              reject(error);
+          }
         });
     }
   });
@@ -75,7 +85,21 @@ let _doLoop = (condition, thunk, value) => {
         }
       })
       .catch((error) => {
-        reject(error);
+        switch(error) {
+          case BREAK_ERROR:
+            resolve(value);
+            break;
+          case CONTINUE_ERROR:
+            if(!condition()) {
+              resolve(value);
+            }
+            else {
+              resolve(_doLoop(condition, thunk, value));
+            }
+            break;
+          default:
+            reject(error);
+        }
       });
   });
 };
@@ -86,41 +110,53 @@ let _doLoop = (condition, thunk, value) => {
  * For the first iteration the value is the `seed` value.
  * Subsequent iterations get the resolved value from the previous iteration.
  * Index starts at 0 and is incremented each iteration.
- * After each iteration the current item in `items` is updated with the resolved
- * value of the current iteration.
- * NOTE: a copy of the input `items` array is made at the beginning and the original
- * array will remain unchanged as all work is done on the copy.
+ * NOTE: modifying `items` will impact subsequent iterations.
  * @function forEach
  * @param {object[]} items Collection to iterator over.
  * @param {function} thunk Loop body. Returns a Promise and accepts a value.
  * @param {object} [seed] Initial value to be passed to first loop iteration.
- * @returns {object[]} Resolves with updated `items` array.
+ * @returns {object[]} Resolves with array containing resolved values from each iteration.
  */
 let forEachLoop = (items, thunk, seed) => {
-  return _forEachLoop(items.slice(), thunk, 0, seed);
+  return _forEachLoop(items, thunk, 0, seed, items.slice());
 };
 
-let _forEachLoop = (items, thunk, index, value) => {
+let _forEachLoop = (items, thunk, index, value, result) => {
   return new Promise((resolve, reject) => {
-    if(index === items.length) {
-      resolve(items);
+    if(index >= items.length) {
+      resolve(result);
     }
     else {
       return thunk(value, items[index], index, items)
         .then((v) => {
-          items[index] = v;
-          resolve(_forEachLoop(items, thunk, index + 1, v));
+          result[index] = v;
+          resolve(_forEachLoop(items, thunk, index + 1, v, result));
         })
         .catch((error) => {
-          reject(error);
+          switch(error) {
+            case BREAK_ERROR:
+              resolve(result);
+              break;
+            case CONTINUE_ERROR:
+              result[index] = value;
+              resolve(_forEachLoop(items, thunk, index + 1, value, result));
+              break;
+            default:
+              reject(error);
+          }
         });
     }
   });
 };
 
+const BREAK_ERROR = 'ASYNC_LOOPS_BREAK';
+const CONTINUE_ERROR = 'ASYNC_LOOPS_CONTINUE';
+
 module.exports = {
   for: forLoop,
   while: whileLoop,
   doWhile: doWhileLoop,
-  forEach: forEachLoop
+  forEach: forEachLoop,
+  break: BREAK_ERROR,
+  continue: CONTINUE_ERROR
 };
