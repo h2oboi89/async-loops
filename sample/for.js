@@ -15,7 +15,7 @@ let update = () => i++;
 
 // loop body
 let body = (value) => {
-  return Promise.resolve(value = value + i);
+  return Promise.resolve(value + i);
 };
 
 // initial value passed into first iteration
@@ -24,5 +24,6 @@ let seed = 0;
 
 loops.for(initial, condition, update, body, seed)
   .then((result) => {
+    // 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 => 45
     console.log(result);
   });
