@@ -25,5 +25,7 @@ let seed = 1;
 
 loops.while(condition, body, seed)
   .then((sum) => {
+    // 1 => 2 => 4 => 8 => 16 => 32 => 64 => 128 => 64
+    // 128 is greater than 100, so we resolve with last value (64)
     console.log(sum);
   });
