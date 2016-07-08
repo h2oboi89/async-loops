@@ -18,5 +18,7 @@ let seed = -1;
 
 loops.doWhile(condition, body, seed)
   .then((sum) => {
+    // -100
+    // loop body executes once even though condition is already false
     console.log(sum);
   });
