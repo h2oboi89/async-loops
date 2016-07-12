@@ -2,23 +2,18 @@
 
 let loops = require('../src/loops');
 
-let i = 100;
+let i = 0;
 
-// checked after execution of the loop body
-let condition = () => i < 0;
-
-// loop body
-let body = (value) => {
-  return Promise.resolve(value * i);
-};
-
-// initial value passed into first iteration
-// (`value` in the body function)
-let seed = -1;
-
-loops.doWhile(condition, body, seed)
+// only difference between `while` and `doWhile` is that a whiles condition is
+// checked *BEFORE* running body while a doWhiles is checked *AFTER*.
+loops.doWhile(
+    // condition
+    () => i < 10,
+    // body
+    (value) => Promise.resolve(value + i++),
+    // seed (value for first iteration)
+    0)
   .then((sum) => {
-    // -100
-    // loop body executes once even though condition is already false
+    // 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 => 45
     console.log(sum);
   });
