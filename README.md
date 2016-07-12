@@ -156,7 +156,7 @@ loops.while(
     // seed (value for first iteration)
     0)
   .then((sum) => {
-    // 1 + 3 + 5 + 7 + 9 => 45
+    // 1 + 3 + 5 + 7 + 9 => 25
     console.log(sum);
   });
 ```
