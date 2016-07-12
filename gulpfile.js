@@ -6,7 +6,7 @@ let _jasmine = require('gulp-jasmine');
 let istanbul = require('gulp-istanbul');
 let tap = require('gulp-tap');
 
-let source = ['./src/**/*.js', './index.js'];
+let source = ['./src/**/*.js', './index.js', './sample/**/*.js'];
 let tests = ['./spec/**/*.js'];
 let gulpfile = ['./gulpfile.js'];
 let all = [].concat(source).concat(tests).concat(gulpfile);
