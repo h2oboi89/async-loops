@@ -1,7 +1,7 @@
 'use strict';
 
 describe('for', () => {
-  let utility = require('./utility.js');
+  let utility = require('jasmine-async-utilities');
   let loops = require('../src/loops.js');
   let mach = require('mach.js');
 

@@ -1,9 +1,9 @@
 'use strict';
 
 describe('doWhile', () => {
-  let utility = require('./utility.js');
-  let loops = require('../src/loops.js');
+  let utility = require('jasmine-async-utilities');
   let mach = require('mach.js');
+  let loops = require('../src/loops.js');
 
   let asyncTest = utility.asyncTest;
   let shouldResolve = utility.shouldResolve;
