@@ -23,6 +23,7 @@ Asynchronous for, while, do-while, and for-each loops using Promises.
 ```js
 let loops = require('async-loops');
 
+let i;
 loops.for(
     // initialize
     () => i = 0,
