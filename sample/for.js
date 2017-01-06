@@ -1,8 +1,9 @@
 'use strict';
 
-let loops = require('../src/loops');
+const loops = require('../src/loops');
 
 let i;
+let result = 0;
 
 loops.for(
     // initialize
@@ -12,10 +13,11 @@ loops.for(
     // update
     () => i++,
     // body
-    (value) => Promise.resolve(value + i),
-    // seed (value for first iteration)
-    0)
-  .then((result) => {
+    () => {
+      result = result + i;
+      return Promise.resolve();
+    })
+  .then(() => {
     // 0 + 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 => 45
     console.log(result);
   });

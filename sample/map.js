@@ -1,14 +1,12 @@
 'use strict';
 
-let loops = require('../src/loops');
+const loops = require('../src/loops');
 
-loops.forEach( // items
+loops.map( // items
     [1, 2, 3, 4, 5],
     // body
-    (value, item) => Promise.resolve(item + 1),
-    //  seed
-    0)
+    (value, item) => Promise.resolve(item * 2))
   .then((value) => {
-    // [ 2, 3, 4, 5, 6]
+    // [ 2, 4, 6, 8, 10]
     console.log(value);
   });

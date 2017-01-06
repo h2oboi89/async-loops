@@ -1,20 +1,15 @@
 'use strict';
 
-let loops = require('../src/loops');
+const loops = require('../src/loops');
 
-loops.forEach(
+loops.reduce(
     //items
     [0, 1, 2, 3, 4, 5],
     // body
-    (value, item, index) => {
-      if(index === 0) {
-        return Promise.resolve(item);
-      }
-      return Promise.resolve(value + item);
+    (accumulator, value, item) => {
+      return Promise.resolve(accumulator + item);
     })
   .then((value) => {
-    // [0, 1, 3, 6, 10, 15]
-    console.log(value);
     // (0 + 1 + 2 + 3 + 4 + 5) => 15
-    console.log(value[value.length - 1]);
+    console.log(value);
   });

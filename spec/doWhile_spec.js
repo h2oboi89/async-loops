@@ -1,20 +1,20 @@
 'use strict';
 
 describe('doWhile', () => {
-  let utility = require('jasmine-async-utilities');
-  let mach = require('mach.js');
-  let loops = require('../src/loops.js');
+  const utility = require('jasmine-async-utilities');
+  const mach = require('mach.js');
+  const loops = require('../src/loops.js');
 
-  let asyncTest = utility.asyncTest;
-  let shouldResolve = utility.shouldResolve;
-  let shouldReject = utility.shouldReject;
-  let doWhileLoop = loops.doWhile;
+  const asyncTest = utility.asyncTest;
+  const shouldResolve = utility.shouldResolve;
+  const shouldReject = utility.shouldReject;
+  const doWhileLoop = loops.doWhile;
 
-  let condition = mach.mockFunction('condition');
-  let thunk = mach.mockFunction('thunk');
+  const condition = mach.mockFunction('condition');
+  const thunk = mach.mockFunction('thunk');
 
   it('should call the loop body once if the condition is false', asyncTest(() => {
-    return thunk.shouldBeCalledWith(undefined).andWillReturn(Promise.resolve())
+    return thunk.shouldBeCalled().andWillReturn(Promise.resolve())
       .then(condition.shouldBeCalled().andWillReturn(false))
       .when(() => {
         return shouldResolve(doWhileLoop(condition, thunk));
@@ -22,23 +22,15 @@ describe('doWhile', () => {
   }));
 
   it('should reject if thunk rejects', asyncTest(() => {
-    return thunk.shouldBeCalledWith(undefined).andWillReturn(Promise.reject('oh noes!'))
+    return thunk.shouldBeCalledWith().andWillReturn(Promise.reject('oh noes!'))
       .when(() => {
         return shouldReject(doWhileLoop(condition, thunk), 'oh noes!');
       });
   }));
 
-  it('should resolve with the value thunk resolves with', asyncTest(() => {
-    return thunk.shouldBeCalledWith(undefined).andWillReturn(Promise.resolve('oh hai der!'))
-      .then(condition.shouldBeCalled().andWillReturn(false))
-      .when(() => {
-        return shouldResolve(doWhileLoop(condition, thunk), 'oh hai der!');
-      });
-  }));
-
   it('should execute the loop until the condition is false', asyncTest(() => {
-    let iteration = () => {
-      return thunk.shouldBeCalledWith(undefined).andWillReturn(Promise.resolve())
+    const iteration = () => {
+      return thunk.shouldBeCalledWith().andWillReturn(Promise.resolve())
         .then(condition.shouldBeCalled().andWillReturn(true));
     };
 
@@ -46,38 +38,43 @@ describe('doWhile', () => {
       .then(iteration())
       .then(iteration())
       .then(iteration())
-      .then(thunk.shouldBeCalledWith(undefined).andWillReturn(Promise.resolve()))
+      .then(thunk.shouldBeCalledWith().andWillReturn(Promise.resolve()))
       .then(condition.shouldBeCalled().andWillReturn(false))
       .when(() => {
         return shouldResolve(doWhileLoop(condition, thunk));
       });
   }));
 
-  it('should return previous value when break is called', asyncTest(() => {
+  it('should abort iterating when break is thrown', asyncTest(() => {
     let i = 0;
     return shouldResolve(doWhileLoop(() => i < 10, () => {
-      i++;
-      if(i === 5) {
-        return Promise.reject(loops.break);
-      }
-      else {
-        return Promise.resolve(i);
-      }
-    }), 4);
+        i++;
+        if(i === 5) {
+          return Promise.reject(loops.break);
+        }
+        else {
+          return Promise.resolve(i);
+        }
+      }))
+      .then(() => expect(i).toEqual(5));
   }));
 
   it('should terminate thunks early if continue is called', asyncTest(() => {
     let i = 0;
     let j = 0;
     return shouldResolve(doWhileLoop(() => i < 10, () => {
-      i++;
-      if(i % 2 === 0) {
-        return Promise.reject(loops.continue);
-      }
-      else {
-        j++;
-        return Promise.resolve(j);
-      }
-    }), 5);
+        i++;
+        if(i % 2 === 0) {
+          return Promise.reject(loops.continue);
+        }
+        else {
+          j++;
+          return Promise.resolve(j);
+        }
+      }))
+      .then((() => {
+        expect(i).toEqual(10)
+        expect(j).toEqual(5);
+      }));
   }));
 });
