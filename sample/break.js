@@ -15,7 +15,7 @@ loops.while(
     // condition
     () => true,
     // body
-    (value) => {
+    () => {
       return new Promise((resolve, reject) => {
         if(i < 10) {
           result = result + i++;
