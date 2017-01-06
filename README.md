@@ -20,4 +20,13 @@ Asynchronous for, while, do-while, and for-each loops using Promises.
 [JSDoc documentation](https://h2oboi89.github.io/async-loops/)
 
 ## Usage
+
+### Resolve
+Body of each loop should resolve.
+For `map` and `reduce` they should do so with a value.
+
+### Reject
+Rejections are seen as errors and will be used to abort the loop.
+`loops.break` and `loops.continue` are special cases that are used as flow control.
+
 [Samples](https://github.com/h2oboi89/async-loops/tree/master/sample)
