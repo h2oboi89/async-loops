@@ -1,14 +1,10 @@
 {
   "name": "async-loops",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "for, while, do-while, and for-each loops for promises",
   "main": "index.js",
   "scripts": {
-    "gulp": "gulp",
-    "lint": "gulp lint",
-    "test": "gulp test",
-    "coverage": "gulp coverage",
-    "watch": "gulp watch",
+    "test": "gulp",
     "docClone": "jsdocgen clone",
     "docGenerate": "jsdocgen generate",
     "docPublish": "jsdocgen publish"
