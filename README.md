@@ -1,6 +1,6 @@
 # [async-loops](https://github.com/h2oboi89/async-loops)
 
-Asynchronous for, while, do-while, and for-each loops using Promises.
+Asynchronous for, while, do-while, map, and reduce loops using Promises.
 
 ## Setup
 - Run `npm install` to install all dependencies
