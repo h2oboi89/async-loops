@@ -16,7 +16,7 @@ describe('while', () => {
   it('should not call the loop body if the condition is false', asyncTest(() => {
     return condition.shouldBeCalled().andWillReturn(false)
       .when(() => {
-        return shouldResolve(whileLoop(condition, thunk));
+        return shouldResolve(() => whileLoop(condition, thunk));
       });
   }));
 
@@ -24,7 +24,7 @@ describe('while', () => {
     return condition.shouldBeCalled().andWillReturn(true)
       .then(thunk.shouldBeCalledWith().andWillReturn(Promise.reject('oh noes!')))
       .when(() => {
-        return shouldReject(whileLoop(condition, thunk), 'oh noes!');
+        return shouldReject(() => whileLoop(condition, thunk), 'oh noes!');
       });
   }));
 
@@ -40,13 +40,13 @@ describe('while', () => {
       .then(iteration())
       .then(condition.shouldBeCalled().andWillReturn(false))
       .when(() => {
-        return shouldResolve(whileLoop(condition, thunk));
+        return shouldResolve(() => whileLoop(condition, thunk));
       });
   }));
 
   it('should abort iterating when break is thrown', asyncTest(() => {
     let i = 0;
-    return shouldResolve(whileLoop(() => i < 10, () => {
+    return shouldResolve(() => whileLoop(() => i < 10, () => {
         i++;
         if(i === 5) {
           return Promise.reject(loops.break);
@@ -61,7 +61,7 @@ describe('while', () => {
   it('should terminate thunks early if continue is called', asyncTest(() => {
     let i = 0;
     let j = 0;
-    return shouldResolve(whileLoop(() => i < 10, () => {
+    return shouldResolve(() => whileLoop(() => i < 10, () => {
         i++;
         if(i % 2 === 0) {
           return Promise.reject(loops.continue);

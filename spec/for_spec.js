@@ -19,7 +19,7 @@ describe('for', () => {
     return initial.shouldBeCalled()
       .then(condition.shouldBeCalled().andWillReturn(false))
       .when(() => {
-        return shouldResolve(forLoop(initial, condition, update, thunk));
+        return shouldResolve(() => forLoop(initial, condition, update, thunk));
       });
   }));
 
@@ -28,7 +28,7 @@ describe('for', () => {
       .then(condition.shouldBeCalled().andWillReturn(true))
       .then(thunk.shouldBeCalledWith().andWillReturn(Promise.reject('oh noes!')))
       .when(() => {
-        return shouldReject(forLoop(initial, condition, update, thunk), 'oh noes!');
+        return shouldReject(() => forLoop(initial, condition, update, thunk), 'oh noes!');
       });
   }));
 
@@ -46,13 +46,13 @@ describe('for', () => {
       .then(iteration())
       .then(condition.shouldBeCalled().andWillReturn(false))
       .when(() => {
-        return shouldResolve(forLoop(initial, condition, update, thunk));
+        return shouldResolve(() => forLoop(initial, condition, update, thunk));
       });
   }));
 
   it('should abort iterating when break is thrown', asyncTest(() => {
     let i;
-    return shouldResolve(forLoop(() => i = 0, () => i < 10, () => i++, () => {
+    return shouldResolve(() => forLoop(() => i = 0, () => i < 10, () => i++, () => {
         if(i === 5) {
           return Promise.reject(loops.break);
         }
@@ -66,7 +66,7 @@ describe('for', () => {
   it('should terminate thunks early if continue is called', asyncTest(() => {
     let i;
     let j = 0;
-    return shouldResolve(forLoop(() => i = 0, () => i < 10, () => i++, () => {
+    return shouldResolve(() => forLoop(() => i = 0, () => i < 10, () => i++, () => {
         if(i % 2 === 0) {
           return Promise.reject(loops.continue);
         }

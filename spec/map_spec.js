@@ -13,7 +13,7 @@ describe('map', () => {
   const thunk = mach.mockFunction('thunk');
 
   it('should not call the loop body if items is empty', asyncTest(() => {
-    return shouldResolve(mapLoop([], thunk), []);
+    return shouldResolve(() => mapLoop([], thunk), []);
   }));
 
   it('should reject if thunk rejects', asyncTest(() => {
@@ -22,7 +22,7 @@ describe('map', () => {
     return thunk.shouldBeCalledWith(0, 0, mach.same(items))
       .andWillReturn(Promise.reject('oh noes!'))
       .when(() => {
-        return shouldReject(mapLoop(items, thunk), 'oh noes!');
+        return shouldReject(() => mapLoop(items, thunk), 'oh noes!');
       });
   }));
 
@@ -38,7 +38,7 @@ describe('map', () => {
       .then(iteration(2, 2).andWillReturn(Promise.resolve(3)))
       .then(iteration(3, 3).andWillReturn(Promise.resolve(6)))
       .when(() => {
-        return shouldResolve(mapLoop(items, thunk, 0), [0, 1, 3, 6]);
+        return shouldResolve(() => mapLoop(items, thunk, 0), [0, 1, 3, 6]);
       }).then(() => {
         expect(items).toEqual([0, 1, 2, 3]);
       });
@@ -46,7 +46,7 @@ describe('map', () => {
 
   it('should abort iterating when break is thrown', asyncTest(() => {
     const items = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    return shouldResolve(mapLoop(items, (item, index) => {
+    return shouldResolve(() => mapLoop(items, (item, index) => {
       if(index === 5) {
         return Promise.reject(loops.break);
       }
@@ -58,7 +58,7 @@ describe('map', () => {
 
   it('should terminate thunks early if continue is called', asyncTest(() => {
     const items = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    return shouldResolve(mapLoop(items, (item, index) => {
+    return shouldResolve(() => mapLoop(items, (item, index) => {
       if(index % 2 === 0) {
         return Promise.reject(loops.continue);
       }
@@ -71,7 +71,7 @@ describe('map', () => {
   it('should terminate if items is shortened', asyncTest(() => {
     const items = [0, 1, 2, 3, 4, 5];
 
-    return shouldResolve(mapLoop(items, (item, index, items) => {
+    return shouldResolve(() => mapLoop(items, (item, index, items) => {
       items.length = 0;
 
       return Promise.resolve();
