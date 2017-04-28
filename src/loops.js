@@ -141,7 +141,7 @@ const _mapLoop = (items, thunk, index, result) => {
  * Thunk should resolve a value, which is used as `accumulator` input for next iteration.
  * Index starts at 0 and is incremented each iteration.
  * NOTE: modifying `items` will impact subsequent iterations.
- * @function forEach
+ * @function reduce
  * @param {object[]} items Collection to iterator over.
  * @param {function} thunk Loop body. Returns a Promise and accepts a value.
  * @param {object|number} [initialValue = 0] Initial value for accumulator.
