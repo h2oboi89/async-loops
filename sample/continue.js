@@ -21,9 +21,9 @@ loops.while(
           reject(loops.continue);
         } else {
           result = result + i++;
-          resolve()
+          resolve();
         }
-      })
+      });
     })
   .then(() => {
     // 1 + 3 + 5 + 7 + 9 => 25

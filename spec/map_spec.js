@@ -30,7 +30,7 @@ describe('map', () => {
     const items = [0, 1, 2, 3];
 
     const iteration = (item, index) => {
-      return thunk.shouldBeCalledWith(item, index, mach.same(items))
+      return thunk.shouldBeCalledWith(item, index, mach.same(items));
     };
 
     return iteration(0, 0).andWillReturn(Promise.resolve(0))
@@ -58,7 +58,6 @@ describe('map', () => {
 
   it('should terminate thunks early if continue is called', asyncTest(() => {
     const items = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    let j = 0;
     return shouldResolve(mapLoop(items, (item, index) => {
       if(index % 2 === 0) {
         return Promise.reject(loops.continue);

@@ -31,7 +31,7 @@ describe('reduce', () => {
     const items = [0, 1, 2, 3];
 
     const iteration = (accumulator, item, index) => {
-      return thunk.shouldBeCalledWith(accumulator, item, index, mach.same(items))
+      return thunk.shouldBeCalledWith(accumulator, item, index, mach.same(items));
     };
 
     return iteration(0, 0, 0).andWillReturn(Promise.resolve(0))

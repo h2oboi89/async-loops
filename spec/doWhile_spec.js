@@ -73,7 +73,7 @@ describe('doWhile', () => {
         }
       }))
       .then((() => {
-        expect(i).toEqual(10)
+        expect(i).toEqual(10);
         expect(j).toEqual(5);
       }));
   }));
