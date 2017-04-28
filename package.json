@@ -1,6 +1,6 @@
 {
   "name": "async-loops",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "for, while, do-while, and for-each loops for promises",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,7 @@
     "gulp-jasmine": "^2.2.0",
     "gulp-jshint": "^2.0.4",
     "gulp-tap": "^0.1.3",
+    "jasmine-async-utilities": "^1.0.1",
     "jasmine-console-reporter": "^1.2.7",
     "jsdocgen": "^0.2.4",
     "jshint": "^2.9.4",

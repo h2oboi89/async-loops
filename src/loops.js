@@ -31,10 +31,10 @@ let _loop = (condition, update, thunk) => {
       resolve();
     }
     else {
-      return thunk()
+      thunk()
         .then(() => {
           update();
-          resolve(_loop(condition, update, thunk));
+          return _loop(condition, update, thunk).then(resolve);
         })
         .catch((error) => {
           switch(error) {
@@ -43,8 +43,7 @@ let _loop = (condition, update, thunk) => {
               break;
             case CONTINUE_ERROR:
               update();
-              resolve(_loop(condition, update, thunk));
-              break;
+              return _loop(condition, update, thunk).then(resolve);
             default:
               reject(error);
           }
@@ -66,13 +65,13 @@ let doWhileLoop = (condition, thunk) => {
 
 let _doLoop = (condition, thunk) => {
   return new Promise((resolve, reject) => {
-    return thunk()
+    thunk()
       .then(() => {
         if(!condition()) {
           resolve();
         }
         else {
-          resolve(_doLoop(condition, thunk));
+          return _doLoop(condition, thunk).then(resolve);
         }
       })
       .catch((error) => {
@@ -85,7 +84,7 @@ let _doLoop = (condition, thunk) => {
               resolve();
             }
             else {
-              resolve(_doLoop(condition, thunk));
+              return _doLoop(condition, thunk).then(resolve);
             }
             break;
           default:
@@ -104,7 +103,7 @@ let _doLoop = (condition, thunk) => {
  * @function map
  * @param {object[]} items Collection to iterator over.
  * @param {function} thunk Loop body. Returns a Promise.
- * @returns {Promise} Resolves if successful; otherwise rejects with error.
+ * @returns {Promise} Resolves with array of values if successful; otherwise rejects with error.
  */
 const mapLoop = (items, thunk) => {
   return _mapLoop(items, thunk, 0, items.slice());
@@ -116,10 +115,10 @@ const _mapLoop = (items, thunk, index, result) => {
       resolve(result);
     }
     else {
-      return thunk(items[index], index, items)
+      thunk(items[index], index, items)
         .then((v) => {
           result[index] = v;
-          resolve(_mapLoop(items, thunk, index + 1, result));
+          return _mapLoop(items, thunk, index + 1, result).then(resolve);
         })
         .catch((error) => {
           switch(error) {
@@ -127,8 +126,7 @@ const _mapLoop = (items, thunk, index, result) => {
               resolve(result);
               break;
             case CONTINUE_ERROR:
-              resolve(_mapLoop(items, thunk, index + 1, result));
-              break;
+              return _mapLoop(items, thunk, index + 1, result).then(resolve);
             default:
               reject(error);
           }
@@ -146,7 +144,8 @@ const _mapLoop = (items, thunk, index, result) => {
  * @function forEach
  * @param {object[]} items Collection to iterator over.
  * @param {function} thunk Loop body. Returns a Promise and accepts a value.
- * @returns {Promise} Resolves if successful; otherwise rejects with error.
+ * @param {object|number} [initialValue = 0] Initial value for accumulator.
+ * @returns {Promise} Resolves with reduced value if successful; otherwise rejects with error.
  */
 const reduceLoop = (items, thunk, initialValue) => {
   return _reduceLoop(items, thunk, 0, initialValue || 0);
@@ -156,23 +155,23 @@ const _reduceLoop = (items, thunk, index, accumulator) => {
   return new Promise((resolve, reject) => {
     if(index >= items.length) {
       resolve(accumulator);
-    } else {
-      return thunk(accumulator, items[index], index, items)
-      .then((v) => {
-        resolve(_reduceLoop(items, thunk, index + 1, v));
-      })
-      .catch((error) => {
-        switch(error) {
-          case BREAK_ERROR:
-            resolve(accumulator);
-            break;
-          case CONTINUE_ERROR:
-            resolve(_reduceLoop(items, thunk, index + 1, accumulator));
-            break;
-          default:
-            reject(error);
-        }
-      });
+    }
+    else {
+      thunk(accumulator, items[index], index, items)
+        .then((v) => {
+          return _reduceLoop(items, thunk, index + 1, v).then(resolve);
+        })
+        .catch((error) => {
+          switch(error) {
+            case BREAK_ERROR:
+              resolve(accumulator);
+              break;
+            case CONTINUE_ERROR:
+              return _reduceLoop(items, thunk, index + 1, accumulator).then(resolve);
+            default:
+              reject(error);
+          }
+        });
     }
   });
 };
