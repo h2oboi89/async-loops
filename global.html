@@ -134,7 +134,59 @@
 <span class="param-type">Promise</span>
     </dd>
 </dl>
-    <h4 class="name" id="forEach"><span class="type-signature"></span>forEach<span class="signature">(items, thunk, initialValue<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="map"><span class="type-signature"></span>map<span class="signature">(items, thunk)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+<div class="description">
+    <p>Asynchronous <code>map</code>.
+Each iteration is passed a the following: <code>(items[index], index, items)</code>.
+Thunk should resolve a value, which will be stored in array that is built up each iteration.
+Index starts at 0 and is incremented each iteration.
+NOTE: modifying <code>items</code> will impact subsequent iterations.</p>
+</div>
+    <h5>Parameters:</h5>
+<table class="params">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+                <td class="name"><code>items</code></td>
+            <td class="type">
+<span class="param-type">Array.&lt;object></span>
+            </td>
+            <td class="description last"><p>Collection to iterator over.</p></td>
+        </tr>
+        <tr>
+                <td class="name"><code>thunk</code></td>
+            <td class="type">
+<span class="param-type">function</span>
+            </td>
+            <td class="description last"><p>Loop body. Returns a Promise.</p></td>
+        </tr>
+    </tbody>
+</table>
+<dl class="details">
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="loops.js.html">loops.js</a>, <a href="loops.js.html#line97">line 97</a>
+    </li></ul></dd>
+</dl>
+<h5>Returns:</h5>
+<div class="param-desc">
+    <p>Resolves with array of values if successful; otherwise rejects with error.</p>
+</div>
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+<span class="param-type">Promise</span>
+    </dd>
+</dl>
+    <h4 class="name" id="reduce"><span class="type-signature"></span>reduce<span class="signature">(items, thunk, initialValue<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
 <div class="description">
     <p>Asynchronous <code>reduce</code>.
 Each iteration is passed a the following: <code>(accumulator, items[index], index, items)</code>.
@@ -211,58 +263,6 @@ NOTE: modifying <code>items</code> will impact subsequent iterations.</p>
 <span class="param-type">Promise</span>
     </dd>
 </dl>
-    <h4 class="name" id="map"><span class="type-signature"></span>map<span class="signature">(items, thunk)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
-<div class="description">
-    <p>Asynchronous <code>map</code>.
-Each iteration is passed a the following: <code>(items[index], index, items)</code>.
-Thunk should resolve a value, which will be stored in array that is built up each iteration.
-Index starts at 0 and is incremented each iteration.
-NOTE: modifying <code>items</code> will impact subsequent iterations.</p>
-</div>
-    <h5>Parameters:</h5>
-<table class="params">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-        <tr>
-                <td class="name"><code>items</code></td>
-            <td class="type">
-<span class="param-type">Array.&lt;object></span>
-            </td>
-            <td class="description last"><p>Collection to iterator over.</p></td>
-        </tr>
-        <tr>
-                <td class="name"><code>thunk</code></td>
-            <td class="type">
-<span class="param-type">function</span>
-            </td>
-            <td class="description last"><p>Loop body. Returns a Promise.</p></td>
-        </tr>
-    </tbody>
-</table>
-<dl class="details">
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="loops.js.html">loops.js</a>, <a href="loops.js.html#line97">line 97</a>
-    </li></ul></dd>
-</dl>
-<h5>Returns:</h5>
-<div class="param-desc">
-    <p>Resolves with array of values if successful; otherwise rejects with error.</p>
-</div>
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-<span class="param-type">Promise</span>
-    </dd>
-</dl>
     <h4 class="name" id="while"><span class="type-signature"></span>while<span class="signature">(condition, thunk)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
 <div class="description">
     <p>Asynchronous <code>while</code> loop.</p>
@@ -315,11 +315,11 @@ NOTE: modifying <code>items</code> will impact subsequent iterations.</p>
 </section>
 </div>
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#doWhile">doWhile</a></li><li><a href="global.html#for">for</a></li><li><a href="global.html#forEach">forEach</a></li><li><a href="global.html#map">map</a></li><li><a href="global.html#while">while</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#doWhile">doWhile</a></li><li><a href="global.html#for">for</a></li><li><a href="global.html#map">map</a></li><li><a href="global.html#reduce">reduce</a></li><li><a href="global.html#while">while</a></li></ul>
 </nav>
 <br class="clear">
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Apr 28 2017 17:13:19 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Apr 28 2017 17:14:25 GMT-0400 (EDT)
 </footer>
 <script> prettyPrint(); </script>
 <script src="scripts/linenumber.js"> </script>
